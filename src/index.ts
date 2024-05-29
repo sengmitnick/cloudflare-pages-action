@@ -1,4 +1,4 @@
-import { getInput, setOutput, setFailed, summary } from "@actions/core";
+import { getInput, setOutput, setFailed, summary, info } from "@actions/core";
 import type { Project, Deployment } from "@cloudflare/types";
 import { context, getOctokit } from "@actions/github";
 import { PullRequestEvent } from "@octokit/webhooks-definitions/schema";
@@ -174,6 +174,7 @@ try {
 
 		await createJobSummary({ deployment: pagesDeployment, aliasUrl: alias });
 
+		info(`EventName: ${context.eventName}`);
 		if (octokit && context.eventName === "pull_request") {
 			await createPullRequesComment(octokit, { deployment: pagesDeployment, aliasUrl: alias });
 		}
